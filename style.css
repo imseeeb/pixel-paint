@@ -1,0 +1,24 @@
+body{
+    background-color: cadetblue;
+    margin: 0px;
+}
+
+canvas{
+    position:fixed;
+    left: 50vw;
+    width: 512px;
+    height: 512px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.canvas{
+    background-color: white;
+}
+
+/*
+canvas{
+    background-color: white;
+}*/
