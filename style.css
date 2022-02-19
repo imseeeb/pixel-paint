@@ -3,22 +3,105 @@ body{
     margin: 0px;
 }
 
+.app{
+    position: relative;
+}
+
+.container{
+    position: fixed;
+}
+
 canvas{
-    position:fixed;
+    position: absolute;
+    /*
     left: 50vw;
     width: 512px;
     height: 512px;
+    */
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    pointer-events: auto;
 }
 
 .canvas{
     background-color: white;
 }
 
-/*
-canvas{
+.hoverCanvas{
+    pointer-events:none;
+}
+
+.toolbar,
+.colors{
+    background-color: rgb(80, 139, 141);
+    width: 100vw;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.colors button,
+.toolbar button{
+    width: 50px;
+    height: 50px;
+    border: none;
+}
+
+.wrapper{
+    position: absolute;
+    pointer-events: none;
+}
+
+.menu{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events:none;
+}
+
+.getDimensions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.red{
+    background-color: red;
+}
+
+.yellow{
+    background-color: yellow;
+}
+
+.green{
+    background-color: green;
+}
+
+.cyan{
+    background-color: cyan;
+}
+
+.blue{
+    background-color: blue;
+}
+
+.purple{
+    background-color: purple;
+}
+
+.black{
+    background-color: black;
+}
+
+.white{
     background-color: white;
-}*/
+}
