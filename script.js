@@ -19,6 +19,10 @@ let paintArea,
     moveDown,
     leftValue=0,
     topValue=0,
+    undo,
+    redo,
+    undoHistory = [],
+    undoCounter = 0,
     colors,
     red,
     yellow,
@@ -74,6 +78,8 @@ function createCanvas(){
                     </div>
 
                     <div class='toolbar'>
+                        <button class="undo">↶</button>
+                        <button class="redo">↷</button>
                         <button class="zoomIn">+</button>
                         <button class="zoomOut">-</button>
                         <button class="left">←</button>
@@ -112,6 +118,8 @@ function createCanvas(){
         black = document.querySelector('.black');
         white = document.querySelector('.white');
 
+        undo = document.querySelector('.undo');
+        redo = document.querySelector('.redo');
         zoomIn = document.querySelector('.zoomIn');
         zoomOut = document.querySelector('.zoomOut');
         moveLeft = document.querySelector('.left');
@@ -125,18 +133,60 @@ function createCanvas(){
 }
 
 function addCanvasListeners(){
-    document.addEventListener('mousemove', draw);
-    document.addEventListener('mousedown', function(e){flag = true; draw(e)});
-    document.addEventListener('mouseup', ()=> flag = false);
-    document.addEventListener('mousemove', hover);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mousedown', function(e){
+        if (undoCounter<undoHistory.length){
+            undoHistory.splice(undoCounter,undoHistory.length);
+        }
+        undoHistory[undoCounter] = canvas.toDataURL();
+        undoCounter++;
+        flag = true;
+        draw(e);
+    });
+    document.addEventListener('mouseup', ()=>{
+        if (flag==true){
+            flag = false;
+        }
+    });
+    canvas.addEventListener('mousemove', hover);
 
     //mobile version
-    document.addEventListener('touchmove', draw);
-    document.addEventListener('touchstart', function(e){flag = true; draw(e)});
-    document.addEventListener('touchend', ()=> flag = false);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchstart', function(e){
+        undoHistory[undoCounter] = canvas.toDataURL();
+        undoCounter++;
+        flag = true;
+        draw(e);
+    });
+    document.addEventListener('touchend', ()=>{
+        if (flag==true){
+            flag = false;
+        }
+    });
 }
 
 function addToolBarListeners(){
+    undo.addEventListener('click', ()=>{
+        if (undoCounter>0){
+            undoHistory[undoCounter] = canvas.toDataURL();
+            let tempCanvas = new Image();
+            tempCanvas.src = undoHistory[undoCounter-1];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            tempCanvas.onload = function(){ctx.drawImage(tempCanvas, 0, 0)};
+            undoCounter--;
+        }
+    });
+
+    redo.addEventListener('click', ()=>{
+        if (undoCounter<undoHistory.length-1){
+            let tempCanvas = new Image();
+            tempCanvas.src = undoHistory[undoCounter+1];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            tempCanvas.onload = function(){ctx.drawImage(tempCanvas, 0, 0)};
+            undoCounter++;
+        }
+    });
+
     zoomIn.addEventListener('click', () =>{
         zoom=zoom+1;
         setPaintAreaSize();
