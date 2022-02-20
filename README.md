@@ -2,7 +2,7 @@
 
 ![pixel-paint](https://user-images.githubusercontent.com/97133099/154837001-545d432e-06f1-4a7a-9360-b5173663b632.gif)
 
-Simple pixel art drawing tool in browser.
+Simple in-browser pixel art drawing tool.
 
 ## Info
 - pure javascript
